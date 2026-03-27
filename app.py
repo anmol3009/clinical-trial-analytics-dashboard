@@ -63,17 +63,37 @@ if selected_conditions and 'condition_category' in df.columns:
 # ==========================================
 st.title("Clinical Trial Performance & Conversion Analytics")
 
-total_trials = len(filtered_df)
-total_enrollment = filtered_df['enrollment'].sum() if 'enrollment' in filtered_df.columns else 0
-avg_duration = filtered_df['duration_days'].mean() if 'duration_days' in filtered_df.columns else 0
+# --- BULLETPROOF KPI CALCULATIONS (Pandas 3.0 Safe) ---
+total_trials = int(len(filtered_df))
 
+# Safely extract enrollment
+total_enrollment = 0.0
+if 'enrollment' in filtered_df.columns:
+    val = filtered_df['enrollment'].sum()
+    total_enrollment = float(val) if not pd.isna(val) else 0.0
+
+# Safely extract duration
+avg_duration = 0.0
+if 'duration_days' in filtered_df.columns:
+    val = filtered_df['duration_days'].mean()
+    avg_duration = float(val) if not pd.isna(val) else 0.0
+
+# Safely extract results
+trials_with_results = 0
 if 'has_results' in filtered_df.columns:
-    trials_with_results = len(filtered_df[filtered_df['has_results'].astype(str).str.lower().isin(['true', 'yes', '1'])]) if filtered_df['has_results'].dtype == object else filtered_df['has_results'].sum()
-else:
-    trials_with_results = 0
+    if filtered_df['has_results'].dtype == object:
+        trials_with_results = int(filtered_df['has_results'].astype(str).str.lower().isin(['true', 'yes', '1']).sum())
+    else:
+        val = filtered_df['has_results'].sum()
+        trials_with_results = int(val) if not pd.isna(val) else 0
 
-pct_with_results = (trials_with_results / total_trials * 100) if total_trials > 0 else 0
-active_trials = filtered_df['is_recruiting'].sum() if 'is_recruiting' in filtered_df.columns else 0
+pct_with_results = float((trials_with_results / total_trials * 100) if total_trials > 0 else 0.0)
+
+# Safely extract active trials
+active_trials = 0
+if 'is_recruiting' in filtered_df.columns:
+    val = filtered_df['is_recruiting'].sum()
+    active_trials = int(val) if not pd.isna(val) else 0
 
 # KPIs inside bordered containers
 kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
