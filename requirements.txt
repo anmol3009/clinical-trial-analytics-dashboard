@@ -7,4 +7,4 @@ seaborn
 matplotlib
 streamlit
 nbformat
-altair
+altair==4.2.2
