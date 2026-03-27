@@ -1,0 +1,21 @@
+# Python Virtual Environments
+.venv/
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Streamlit specific
+.streamlit/secrets.toml
+
+# Data (Ignore raw data, but keep processed data for the live app)
+data/raw/
+*.zip
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
