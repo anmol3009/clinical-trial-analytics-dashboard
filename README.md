@@ -1,6 +1,6 @@
 # Clinical Trial Performance & Analytics Dashboard 🔬
 
-**Live Demo:** [Insert your Live Streamlit URL here]
+**Live Demo:** https://anmol-clinical-analytics-dashboard.streamlit.app
 
 ## 📌 Project Overview
 This project is an interactive, end-to-end data analytics dashboard designed to monitor and analyze global clinical trial performance. Built with **Python, Pandas, Plotly, and Streamlit**, it transforms raw clinical registry data into actionable healthcare insights, mirroring the daily workflows of Global Data Science & Analytics (GDSA) teams in the life sciences sector.
